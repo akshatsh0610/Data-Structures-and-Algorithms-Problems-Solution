@@ -1,0 +1,45 @@
+Problem Statement -:
+
+Given an integer array nums and an integer k, split nums into k non-empty subarrays such that the largest sum of any subarray is minimized.
+
+Return the minimized largest sum of the split.
+
+A subarray is a contiguous part of the array.
+
+Example 1 -:
+
+Input: nums = [7,2,5,10,8], k = 2
+Output: 18
+Explanation: There are four ways to split nums into two subarrays.
+The best way is to split it into [7,2,5] and [10,8], where the largest sum among the two subarrays is only 18.
+
+Example 2 -:
+
+Input: nums = [1,2,3,4,5], k = 2
+Output: 9
+Explanation: There are four ways to split nums into two subarrays.
+The best way is to split it into [1,2,3] and [4,5], where the largest sum among the two subarrays is only 9.
+
+Problem Constraints -:
+
+1 <= nums.length <= 1000
+0 <= nums[i] <= 106
+1 <= k <= min(50, nums.length)
+
+Intuition -:
+
+So in this problem we have to split array in k subarrays such that maximum sum in every split is minimized. Now this seems little confusing. Think of it like this,
+you can split an array into k subarrays in x ways. In each way you are getting k subarrays and for each subarray you are calculating sum and your final sum is 
+maximum sum out of these k subarrays. You will get x final sums (equal to number of ways), now out of these x final sums you need to find the minimum sum. This is 
+what problem statement is saying.
+Now let's see how we can solve this problem.
+So first thing is we need to minimize the final sum so this suggests that we can apply Binary Search on Answer. We will set our start pointer on 0 (minimum sum when
+nothing is taken in sum) and end pointer on sum of array elements (in limiting case we can get maximum sum which can be minimum at same time is sum of all array
+elements, think it as when k=1). Now we will apply binary search on range [start,end]. 
+But this is not usual Binary Search something is catchy here. Let's see what it is...
+Here we need to split the subarray into k arrays and the mid (start+end/2) is our maximum sum of one subarray out of k splits (as we need to minimizes maximum sum).
+So we should have (k-1) subarrays whose sum<=mid, if we are holding this condition true mid can be one of our answer which we will minimize using end=mid-1, otherwise
+we will increase maximum sum by moving start pointer "start=mid+1".
+To check (k-1) subarrays having sum<=mid, we will iterated through our array and will calculate running sum. If running sum exceeds mid then we will increase subarray 
+counter by 1 and will again calculate new running sum from that point. If we get any element in array whose value is greater than mid then we will increase mid, if we
+get subarry count>(k-1) then also we will increase mid. If we have subarray count==k-1 then mid can be our answer. 
