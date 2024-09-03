@@ -1,0 +1,40 @@
+Problem Statement -:
+
+You have a pointer at index 0 in an array of size arrLen. At each step, you can move 1 position to the left, 1 position to the right in the array, or stay in the same place (The pointer should not be placed 
+outside the array at any time).
+Given two integers steps and arrLen, return the number of ways such that your pointer is still at index 0 after exactly steps steps. Since the answer may be too large, return it modulo 10^9 + 7.
+
+Example 1 -:
+
+Input: steps = 3, arrLen = 2
+Output: 4
+Explanation: There are 4 differents ways to stay at index 0 after 3 steps.
+Right, Left, Stay
+Stay, Right, Left
+Right, Stay, Left
+Stay, Stay, Stay
+
+Example 2 -:
+
+Input: steps = 2, arrLen = 4
+Output: 2
+Explanation: There are 2 differents ways to stay at index 0 after 2 steps
+Right, Left
+Stay, Stay
+
+Problem Constraints -:
+1 <= steps <= 500
+1 <= arrLen <= 10^6
+
+Topic Tags -: Dynamic Programming
+
+Approach -:
+
+So here we are given an array of length arrayLen and we are at 0th index of that array now we can either take one step to right (we can't go right when we are on (arrLen-1)th index) or left (we can't go left
+when we are on 0th index). We are also given maximum number of steps which we can take to comeback to 0th position again. We need to find the total number of ways in which we can do as mentioned.
+We can see that we have three choices of taking steps either we can go left or right or stay at the place where we are. Seeing each of the three choices we can easily calculate the total number of ways. We will
+start from 0th position then making choice possible choice from every position till we have reached at 0th position again in exactly given steps. Now as we have three choices it is definite that there has to be
+repeating states (position,steps) and we must have a 2D array to store each of these states. But you might be wondering that is it possible to make an array of size (10^6*500).
+No it is not possible to make such a large array. But here is a twist we are making an array that stores position, steps but the size will be (501*501). Now this must have amused you, why is it so?
+The answer is very simple as we have to reach 0 again in exactly given steps and the given steps can go up to 500 hence the position will also go up to 500 only. That is why we will a 2D array of (501*501).
+And at last we will get our answer. 
