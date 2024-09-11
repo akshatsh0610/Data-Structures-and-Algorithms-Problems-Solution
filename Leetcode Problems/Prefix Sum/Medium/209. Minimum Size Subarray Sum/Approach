@@ -1,0 +1,57 @@
+Problem Statement -:
+
+Given an array of positive integers nums and a positive integer target, return the minimal length of a subarray whose sum is greater than or equal to target. 
+If there is no such subarray, return 0 instead.
+
+Example 1:
+
+Input: target = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: The subarray [4,3] has the minimal length under the problem constraint.
+
+Example 2:
+
+Input: target = 4, nums = [1,4,4]
+Output: 1
+
+Example 3:
+
+Input: target = 11, nums = [1,1,1,1,1,1,1,1]
+Output: 0
+
+Problem Constraints -:
+
+1 <= target <= 10^9
+1 <= nums.length <= 10^5
+1 <= nums[i] <= 10^4
+
+Topic Tags -: Array, Binary Search, Sliding Window, Prefix Sum
+
+Intuition -: 
+
+In this problem we are given an array and a target and we need to find minimum size of subarray whose sum is greater than or equal to k. We will follow three 
+different approaches to solve this problem.
+
+Brute Force approach -:
+This approach relies on finding the sum of all subarrays and then comparing it with target. If the sum of subarray is greater or equal to the target then we can
+consider subarray as our answer. 
+To find sum of each subarray we will define a i pointer which basically refers to the starting point of subarray and we will use an another loop for fixing j that
+refers to the end point of the subarray. For every i we will go on every possible j. In this way we will create all subarrays and calculate sum of each.
+Now this approach uses two nested loops i->j. Hence the time taken is O(n^2) where n is size of subarray. Now n can go up to 10^5 so this approach is not going to
+work here.
+
+Binary Search + Prefix Sum Approach -:
+Looking at the constraints we can say that all the numbers present in array are greater than 0. And this is one of the most important point in this question in 
+order to solve this problem using Binary Search and Prefix Sum. The problem says that we need to find the subarray whose sum is greater or equal to target.
+The prefix sum is the concept in which we calculate the sum of array from 0th index to end and every time we store the from 0th to ith index in our prefix array.
+So I can say that the ith index of prefix array contains the sum of 0-ith index. Prefix array can easily be used to find the sum of any subarray. Suppose we need 
+to find the sum of subarray starting at ith index and ending at jth index. The sum of this subarray will be prefix[j]-prefix[i-1]. Since,
+prefix[j] = sum of subarray [0-j]
+prefix[i-1] = sum of subarray [0-(i-1)] (i=0 is special case here)
+Now according to problem prefix[j]-prefix[i-1]>=target. So we can easily apply binary search on our prefix array. We will find prefix[j] using binary search and 
+we will fix prefix[i-1] as mid, prefix[j]=target+prefix[i-1]. In this way we can get our desired answer. The approach will take time of O(nlogn).
+
+Sliding Window-:
+This is the optimized approach of this problem. We can calculate running sum and can check the sum for subarray using start and end point of window. We will 
+expand our window using end pointer till sum is less than target. Whenever our sum becomes greater or equal to target we will shrink our window using start pointer
+and remove arr[start] from sum. In this we will get our answer. The time taken by approach is O(n).
